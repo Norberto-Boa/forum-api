@@ -5,8 +5,8 @@ test("create an answer", () => {
   const answerQuestion = new AnswerQuestionService();
 
   const answer = answerQuestion.execute({
-    instructorId: "1",
     questionId: "1",
+    authorId: "1",
     content: "This is a sample answer",
   });
 
