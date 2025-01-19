@@ -1,3 +1,4 @@
+import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Answer } from "../entities/answer";
 import type { AnswersRepository } from "../repositories/answer-repository";
 
@@ -14,9 +15,9 @@ export class AnswerQuestionService {
     content,
     authorId,
   }: AnswerQuestionServiceRequest) {
-    const answer = new Answer({
-      authorId,
-      questionId,
+    const answer = Answer.create({
+      authorId: new UniqueEntityID(authorId),
+      questionId: new UniqueEntityID(questionId),
       content,
     });
 
