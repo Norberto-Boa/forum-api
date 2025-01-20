@@ -1,6 +1,6 @@
-import { UniqueEntityID } from '../../core/entities/unique-entity-id'
-import { Answer } from '../entities/answer'
-import type { AnswersRepository } from '../repositories/answer-repository'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Answer } from '@/domain/forum/enterprise/entities/answer'
+import type { AnswersRepository } from '@/domain/forum/application/repositories/answer-repository'
 
 interface AnswerQuestionServiceRequest {
   questionId: string
