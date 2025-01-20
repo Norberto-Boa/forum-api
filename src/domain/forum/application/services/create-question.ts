@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Question } from '@/domain/forum/enterprise/entities/question';
-import type { QuestionRepostory } from '../repositories/questions-repository';
+import type { QuestionRepository } from '../repositories/questions-repository';
 
 interface CreateQuestionServiceRequest {
   authorId: string;
@@ -13,7 +13,7 @@ interface CreateQuestionServiceResponse {
 }
 
 export class CreateQuestionService {
-  constructor(private questionRepository: QuestionRepostory) {}
+  constructor(private questionRepository: QuestionRepository) {}
 
   async execute({
     authorId,
