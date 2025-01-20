@@ -1,8 +1,8 @@
 export class Slug {
-  public value: string;
+  public value: string
 
   constructor(value: string) {
-    this.value = value;
+    this.value = value
   }
 
   /**
@@ -14,15 +14,15 @@ export class Slug {
    */
   static createFromText(text: string) {
     const slugText = text
-      .normalize("NFKD")
+      .normalize('NFKD')
       .toLowerCase()
       .trim()
-      .replace(/\s+/g, "-") // Remove whitespaces
-      .replace(/[^\w-]+/g, "") // Get everything that isn't a word
-      .replace(/_/g, "-") // Get all underscore and change to hifen
-      .replace(/--+/g, "-") // Remove duplicates hifens
-      .replace(/-$/g, ""); // Remove every hifen at the end
+      .replace(/\s+/g, '-') // Remove whitespaces
+      .replace(/[^\w-]+/g, '') // Get everything that isn't a word
+      .replace(/_/g, '-') // Get all underscore and change to hifen
+      .replace(/--+/g, '-') // Remove duplicates hifens
+      .replace(/-$/g, '') // Remove every hifen at the end
 
-    return new Slug(slugText);
+    return new Slug(slugText)
   }
 }
