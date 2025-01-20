@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
-import tsConfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from 'vite'
+import tsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [
@@ -10,4 +10,4 @@ export default defineConfig({
   test: {
     globals: true,
   },
-});
+})

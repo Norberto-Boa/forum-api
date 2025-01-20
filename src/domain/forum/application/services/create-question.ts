@@ -1,15 +1,15 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Question } from '@/domain/forum/enterprise/entities/question'
-import type { QuestionRepostory } from '../repositories/questions-repository'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { Question } from '@/domain/forum/enterprise/entities/question';
+import type { QuestionRepostory } from '../repositories/questions-repository';
 
 interface CreateQuestionServiceRequest {
-  authorId: string
-  title: string
-  content: string
+  authorId: string;
+  title: string;
+  content: string;
 }
 
 interface CreateQuestionServiceResponse {
-  question: Question
+  question: Question;
 }
 
 export class CreateQuestionService {
@@ -24,10 +24,10 @@ export class CreateQuestionService {
       authorId: new UniqueEntityID(authorId),
       title,
       content,
-    })
+    });
 
-    await this.questionRepository.create(question)
+    await this.questionRepository.create(question);
 
-    return { question }
+    return { question };
   }
 }

@@ -1,20 +1,22 @@
-import { AnswerQuestionService } from '@/domain/forum/application/services/answer-question'
-import type { AnswersRepository } from '@/domain/forum/application/repositories/answer-repository'
-import type { Answer } from '@/domain/forum/enterprise/entities/answer'
+import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository';
+import { AnswerQuestionService } from './answer-question';
 
-const fakeAnswersRepository: AnswersRepository = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create: async function (answer: Answer) {},
-}
+let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let sut: AnswerQuestionService;
 
-test('create an answer', async () => {
-  const answerQuestion = new AnswerQuestionService(fakeAnswersRepository)
+describe('CreateQuestionService', () => {
+  beforeEach(() => {
+    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    sut = new AnswerQuestionService(inMemoryAnswersRepository);
+  });
 
-  const answer = await answerQuestion.execute({
-    questionId: '1',
-    authorId: '1',
-    content: 'This is a sample answer',
-  })
+  it('should be able to create a new Question', async () => {
+    const { answer } = await sut.execute({
+      authorId: '1',
+      questionId: '1',
+      content: 'this is an question',
+    });
 
-  expect(answer.content).toEqual('This is a sample answer')
-})
+    expect(answer.content).toEqual('this is an question');
+  });
+});

@@ -1,20 +1,22 @@
-import type { QuestionRepostory } from '../repositories/questions-repository'
-import type { Question } from '../../enterprise/entities/question'
-import { CreateQuestionService } from './create-question'
+import { CreateQuestionService } from './create-question';
+import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository';
 
-const fakeAnswersRepository: QuestionRepostory = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create: async function (question: Question) {},
-}
+let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let sut: CreateQuestionService;
 
-test('create an question', async () => {
-  const createQuestion = new CreateQuestionService(fakeAnswersRepository)
+describe('CreateQuestionService', () => {
+  beforeEach(() => {
+    inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+    sut = new CreateQuestionService(inMemoryQuestionsRepository);
+  });
 
-  const { question } = await createQuestion.execute({
-    authorId: '1',
-    content: 'this is an question',
-    title: 'JavaScript Question',
-  })
+  it('should be able to create a new Question', async () => {
+    const { question } = await sut.execute({
+      authorId: '1',
+      content: 'this is an question',
+      title: 'JavaScript Question',
+    });
 
-  expect(question.content).toEqual('this is an question')
-})
+    expect(question.content).toEqual('this is an question');
+  });
+});
