@@ -1,3 +1,4 @@
+import type { PaginationParams } from '@/core/repositories/pagination-params';
 import type { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository';
 import type { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment';
 
@@ -26,5 +27,14 @@ export class InMemoryQuestionCommentsRepository
     );
 
     this.items.splice(itemIndex, 1);
+  }
+
+  async findManyRecent(params: PaginationParams, questionId: string) {
+    const items = await this.items
+      .filter((item) => item.questionId.toString() === questionId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .slice((params.page - 1) * 20, params.page * 20);
+
+    return items;
   }
 }
