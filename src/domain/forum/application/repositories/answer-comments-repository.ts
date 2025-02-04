@@ -2,4 +2,6 @@ import type { AnswerComment } from '@/domain/forum/enterprise/entities/answer-co
 
 export interface AnswerCommentsRepository {
   create(answer: AnswerComment): Promise<void>;
+  findById(id: string): Promise<AnswerComment | null>;
+  delete(comment: AnswerComment): Promise<void>;
 }
