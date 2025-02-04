@@ -10,11 +10,11 @@ interface FetchRecentQuestionsServiceResponse {
 }
 
 export class FetchRecentQuestionsService {
-  constructor(private answersRepository: QuestionRepository) {}
+  constructor(private questionsRepository: QuestionRepository) {}
   async execute({
     page,
   }: FetchRecentQuestionsServiceRequest): Promise<FetchRecentQuestionsServiceResponse> {
-    const questions = await this.answersRepository.findManyRecent({
+    const questions = await this.questionsRepository.findManyRecent({
       page,
     });
 
