@@ -33,13 +33,13 @@ describe('FetchRecentQuestions', () => {
       }),
     );
 
-    const { questionsComments } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       questionId: 'question-1',
     });
 
-    expect(questionsComments).toHaveLength(2);
-    expect(questionsComments).toEqual([
+    expect(result.value?.questionsComments).toHaveLength(2);
+    expect(result.value?.questionsComments).toEqual([
       expect.objectContaining({ createdAt: new Date(2022, 0, 20) }),
       expect.objectContaining({ createdAt: new Date(2022, 0, 18) }),
     ]);
@@ -53,11 +53,11 @@ describe('FetchRecentQuestions', () => {
       );
     }
 
-    const { questionsComments } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       questionId: 'question-1',
     });
 
-    expect(questionsComments).toHaveLength(2);
+    expect(result.value?.questionsComments).toHaveLength(2);
   });
 });

@@ -40,14 +40,12 @@ describe('DeleteQuestionService', () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    await expect(
-      async () =>
-        await sut.execute({
-          authorId: '2',
-          questionId: 'question-1',
-        }),
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      authorId: '2',
+      questionId: 'question-1',
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(inMemoryQuestionsRepository.items).toHaveLength(1);
   });
 });

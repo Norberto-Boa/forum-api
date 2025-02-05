@@ -23,13 +23,13 @@ describe('CommentOnAnswerService', () => {
       makeAnswer({}, new UniqueEntityID('answer-1')),
     );
 
-    const { answerComment } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       answerId: 'answer-1',
       content: 'this is a comment',
     });
 
-    expect(answerComment.content).toEqual('this is a comment');
-    expect(answerComment.answerId.toString()).toEqual('answer-1');
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.answerComment.content).toEqual('this is a comment');
   });
 });

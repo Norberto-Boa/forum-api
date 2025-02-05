@@ -24,13 +24,13 @@ describe('CommentOnQuestionService', () => {
       makeQuestion({}, new UniqueEntityID('question-1')),
     );
 
-    const { questionComment } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       questionId: 'question-1',
       content: 'this is a comment',
     });
 
-    expect(questionComment.content).toEqual('this is a comment');
-    expect(questionComment.questionId.toString()).toEqual('question-1');
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.questionComment.content).toEqual('this is a comment');
   });
 });

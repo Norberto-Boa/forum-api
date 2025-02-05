@@ -45,14 +45,13 @@ describe('UpdateQuestionService', () => {
 
     await inMemoryQuestionsRepository.create(newQuestion);
 
-    await expect(
-      async () =>
-        await sut.execute({
-          authorId: '2',
-          questionId: 'question-1',
-          content: 'question',
-          title: 'Minha questao',
-        }),
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      authorId: '2',
+      questionId: 'question-1',
+      content: 'question',
+      title: 'Minha questao',
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

@@ -43,13 +43,12 @@ describe('UpdateAnswerService', () => {
 
     await inMemoryAnswersRepository.create(newAnswer);
 
-    await expect(
-      async () =>
-        await sut.execute({
-          authorId: '2',
-          answerId: 'answer-1',
-          content: 'answer',
-        }),
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      authorId: '2',
+      answerId: 'answer-1',
+      content: 'answer',
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });

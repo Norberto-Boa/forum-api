@@ -29,12 +29,12 @@ describe('FetchQuestionAnswersQuestions', () => {
       }),
     );
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       page: 1,
       questionId: 'question-1',
     });
 
-    expect(answers).toHaveLength(3);
+    expect(result.value?.answers).toHaveLength(3);
     // expect(questions).toEqual([
     //   expect.objectContaining({ createdAt: new Date(2022, 0, 23) }),
     //   expect.objectContaining({ createdAt: new Date(2022, 0, 20) }),
@@ -48,11 +48,11 @@ describe('FetchQuestionAnswersQuestions', () => {
       );
     }
 
-    const { answers } = await sut.execute({
+    const result = await sut.execute({
       page: 2,
       questionId: 'question-1',
     });
 
-    expect(answers).toHaveLength(2);
+    expect(result.value?.answers).toHaveLength(2);
   });
 });

@@ -48,13 +48,11 @@ describe('Choose Question Best Answer', () => {
     );
 
     await inMemoryQuestionsRepository.create(question);
+    const result = await sut.execute({
+      authorId: '2',
+      answerId: 'answer-1',
+    });
 
-    await expect(
-      async () =>
-        await sut.execute({
-          authorId: '2',
-          answerId: 'answer-1',
-        }),
-    ).rejects.toBeInstanceOf(Error);
+    expect(result.isLeft()).toBe(true);
   });
 });

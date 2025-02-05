@@ -11,12 +11,12 @@ describe('CreateQuestionService', () => {
   });
 
   it('should be able to create a new Question', async () => {
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       content: 'this is an question',
       title: 'JavaScript Question',
     });
 
-    expect(question.content).toEqual('this is an question');
+    expect(result.value?.question.content).toEqual('this is an question');
   });
 });

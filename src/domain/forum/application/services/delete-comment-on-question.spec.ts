@@ -35,14 +35,12 @@ describe('DeleteCommentOnQuestionService', () => {
 
     await inMemoryQuestionCommentsRepository.create(newComment);
 
-    await expect(
-      async () =>
-        await sut.execute({
-          authorId: '2',
-          commentId: newComment.authorId.toString(),
-        }),
-    ).rejects.toBeInstanceOf(Error);
+    const result = await sut.execute({
+      authorId: '2',
+      commentId: newComment.authorId.toString(),
+    });
 
+    expect(result.isLeft()).toBeTruthy();
     expect(inMemoryQuestionCommentsRepository.items).toHaveLength(1);
   });
 });
