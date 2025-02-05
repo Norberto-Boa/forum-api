@@ -1,15 +1,21 @@
+import { left, right, type Either } from '@/core/either';
 import type { Answer } from '../../enterprise/entities/answer';
 import type { AnswersRepository } from '../repositories/answers-repository';
 import type { QuestionRepository } from '../repositories/questions-repository';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
+import { NotAllowedError } from './errors/not-allowed-error';
 
 interface ChooseBestAnswerServiceRequest {
   authorId: string;
   answerId: string;
 }
 
-interface ChooseBestAnswerServiceResponse {
-  answer: Answer;
-}
+type ChooseBestAnswerServiceResponse = Either<
+  ResourceNotFoundError,
+  {
+    answer: Answer;
+  }
+>;
 
 export class ChooseBestAnswerService {
   constructor(
@@ -24,7 +30,7 @@ export class ChooseBestAnswerService {
     const answer = await this.answersRepository.findById(answerId.toString());
 
     if (!answer) {
-      throw new Error('Answer not found');
+      return left(new ResourceNotFoundError());
     }
 
     const question = await this.questionsRepository.findById(
@@ -32,19 +38,19 @@ export class ChooseBestAnswerService {
     );
 
     if (!question) {
-      throw new Error('Question not found');
+      return left(new ResourceNotFoundError());
     }
 
     if (question.authorId.toString() !== authorId) {
-      throw new Error('Not allowed to update');
+      return left(new NotAllowedError());
     }
 
     question.bestAnswerId = answer.id;
 
     await this.answersRepository.save(answer);
 
-    return {
+    return right({
       answer,
-    };
+    });
   }
 }

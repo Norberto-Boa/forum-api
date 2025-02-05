@@ -1,3 +1,4 @@
+import { right, type Either } from '@/core/either';
 import type { QuestionComment } from '../../enterprise/entities/question-comment';
 import type { QuestionCommentsRepository } from '../repositories/question-comments-repository';
 
@@ -6,9 +7,12 @@ interface FetchQuestionCommentsServiceRequest {
   page: number;
 }
 
-interface FetchQuestionCommentsServiceResponse {
-  questionsComments: QuestionComment[];
-}
+type FetchQuestionCommentsServiceResponse = Either<
+  null,
+  {
+    questionsComments: QuestionComment[];
+  }
+>;
 
 export class FetchQuestionCommentsService {
   constructor(private questionCommentsRepository: QuestionCommentsRepository) {}
@@ -24,6 +28,6 @@ export class FetchQuestionCommentsService {
         questionId,
       );
 
-    return { questionsComments };
+    return right({ questionsComments });
   }
 }

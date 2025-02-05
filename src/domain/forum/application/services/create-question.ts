@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Question } from '@/domain/forum/enterprise/entities/question';
 import type { QuestionRepository } from '../repositories/questions-repository';
+import { right, type Either } from '@/core/either';
 
 interface CreateQuestionServiceRequest {
   authorId: string;
@@ -8,9 +9,12 @@ interface CreateQuestionServiceRequest {
   content: string;
 }
 
-interface CreateQuestionServiceResponse {
-  question: Question;
-}
+type CreateQuestionServiceResponse = Either<
+  null,
+  {
+    question: Question;
+  }
+>;
 
 export class CreateQuestionService {
   constructor(private questionRepository: QuestionRepository) {}
@@ -28,6 +32,6 @@ export class CreateQuestionService {
 
     await this.questionRepository.create(question);
 
-    return { question };
+    return right({ question });
   }
 }

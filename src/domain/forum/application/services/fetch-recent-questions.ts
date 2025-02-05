@@ -1,13 +1,17 @@
 import type { QuestionRepository } from '../repositories/questions-repository';
 import { Question } from '../../enterprise/entities/question';
+import { right, type Either } from '@/core/either';
 
 interface FetchRecentQuestionsServiceRequest {
   page: number;
 }
 
-interface FetchRecentQuestionsServiceResponse {
-  questions: Question[];
-}
+type FetchRecentQuestionsServiceResponse = Either<
+  null,
+  {
+    questions: Question[];
+  }
+>;
 
 export class FetchRecentQuestionsService {
   constructor(private questionsRepository: QuestionRepository) {}
@@ -18,6 +22,6 @@ export class FetchRecentQuestionsService {
       page,
     });
 
-    return { questions };
+    return right({ questions });
   }
 }

@@ -1,4 +1,7 @@
+import { left, right, type Either } from '@/core/either';
 import type { QuestionRepository } from '../repositories/questions-repository';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
+import { NotAllowedError } from './errors/not-allowed-error';
 
 interface UpdateQuestionServiceRequest {
   authorId: string;
@@ -7,7 +10,10 @@ interface UpdateQuestionServiceRequest {
   content: string;
 }
 
-interface UpdateQuestionServiceResponse {}
+type UpdateQuestionServiceResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  NonNullable<unknown>
+>;
 
 export class UpdateQuestionService {
   constructor(private questionRepository: QuestionRepository) {}
@@ -23,11 +29,11 @@ export class UpdateQuestionService {
     );
 
     if (!question) {
-      throw new Error('Question not found');
+      return left(new ResourceNotFoundError());
     }
 
     if (question.authorId.toString() !== authorId) {
-      throw new Error('Not allowed to update');
+      return left(new NotAllowedError());
     }
 
     question.title = title;
@@ -35,6 +41,6 @@ export class UpdateQuestionService {
 
     await this.questionRepository.save(question);
 
-    return {};
+    return right({});
   }
 }

@@ -1,11 +1,17 @@
+import { left, right, type Either } from '@/core/either';
 import type { AnswersRepository } from '../repositories/answers-repository';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
+import { NotAllowedError } from './errors/not-allowed-error';
 
 interface DeleteAnswerServiceRequest {
   authorId: string;
   answerId: string;
 }
 
-interface DeleteAnswerServiceResponse {}
+type DeleteAnswerServiceResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  NonNullable<unknown>
+>;
 
 export class DeleteAnswerService {
   constructor(private answerRepository: AnswersRepository) {}
@@ -17,15 +23,15 @@ export class DeleteAnswerService {
     const answer = await this.answerRepository.findById(answerId.toString());
 
     if (!answer) {
-      throw new Error('Answer not found');
+      return left(new ResourceNotFoundError());
     }
 
     if (answer.authorId.toString() !== authorId) {
-      throw new Error('You are not authorized to delete this answer');
+      return left(new NotAllowedError());
     }
 
     await this.answerRepository.delete(answer);
 
-    return {};
+    return right({});
   }
 }
