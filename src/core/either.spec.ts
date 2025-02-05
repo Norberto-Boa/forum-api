@@ -11,10 +11,6 @@ function doSomething(shouldSuccess: boolean): Either<string, number> {
 test('succes result', () => {
   const result = doSomething(true);
 
-  if (result.isRight()) {
-    console.log(result.value);
-  }
-
   expect(result.isLeft()).toBe(false);
   expect(result.isRight()).toBe(true);
 });
