@@ -1,3 +1,4 @@
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { CreateQuestionService } from './create-question';
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository';
 
@@ -15,8 +16,17 @@ describe('CreateQuestionService', () => {
       authorId: '1',
       content: 'this is an question',
       title: 'JavaScript Question',
+      attachmentsIds: ['1', '2'],
     });
 
     expect(result.value?.question.content).toEqual('this is an question');
+    expect(inMemoryQuestionsRepository.items[0]).toEqual(
+      result.value?.question,
+    );
+    expect(inMemoryQuestionsRepository.items[0].attachments).toHaveLength(2);
+    expect(inMemoryQuestionsRepository.items[0].attachments).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+    ]);
   });
 });
