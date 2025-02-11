@@ -24,6 +24,7 @@
     "vitest": "2.1.8"
   },
   "dependencies": {
-    "dayjs": "1.11.13"
+    "dayjs": "1.11.13",
+    "forum-api": "file:"
   }
 }
