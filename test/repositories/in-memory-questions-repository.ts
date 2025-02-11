@@ -44,7 +44,6 @@ export class InMemoryQuestionsRepository implements QuestionRepository {
   async delete(question: Question): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id === question.id);
 
-    console.log(question.id.toValue());
     this.items.splice(itemIndex, 1);
     this.questionAttachmentsRepository.deleteManyByQuestionId(
       question.id.toValue(),

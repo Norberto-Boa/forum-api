@@ -45,6 +45,7 @@ describe('DeleteQuestionService', () => {
     });
 
     expect(inMemoryQuestionsRepository.items).toHaveLength(0);
+    expect(inMemoryQuestionAttachmentsRepository.items).toHaveLength(0);
   });
 
   it('should be not be able to delete Question with different authorId', async () => {
