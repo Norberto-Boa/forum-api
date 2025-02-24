@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events';
 import type { PaginationParams } from '@/core/repositories/pagination-params';
 import { QuestionAttachmentRepository } from '@/domain/forum/application/repositories/question-attachments-repository';
 import type { QuestionRepository } from '@/domain/forum/application/repositories/questions-repository';
@@ -39,6 +40,8 @@ export class InMemoryQuestionsRepository implements QuestionRepository {
       (item) => item.id.toString() === question.id.toString(),
     );
     this.items[itemIndex] = question;
+
+    DomainEvents.dispatchEventsForAggregate(question.id);
   }
 
   async delete(question: Question): Promise<void> {
