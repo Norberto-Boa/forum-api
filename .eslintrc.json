@@ -11,7 +11,8 @@
         "endOfLine": "auto",
         "singleQuote": true
       }
-    ]
+    ],
+    "no-new": "off"
   },
   "env": {
     "vitest-globals/env": true
